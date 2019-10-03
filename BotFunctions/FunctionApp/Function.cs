@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +20,12 @@ namespace FunctionApp
 
             string name = req.Query["name"];
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            using (var stream = new StreamReader(req.Body))
+            {
+                var payload = await stream.ReadToEndAsync();
+                dynamic data = JsonConvert.DeserializeObject(stream.ReadToEnd());
+                name = name ?? data?.name;
+            }
 
             return name != null
                 ? (ActionResult)new OkObjectResult($"Hello, {name}")
