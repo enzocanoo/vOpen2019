@@ -1,5 +1,9 @@
 ﻿using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Dialogs.Adaptive;
+using Microsoft.Bot.Builder.Dialogs.Declarative;
+using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
 using Microsoft.Bot.Builder.Integration.Functions;
+using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -14,11 +18,15 @@ namespace SuperSecretProject
             IStorage storage,
             UserState userState,
             ConversationState conversationState,
+            ResourceExplorer resourceExplorer,
             ILogger<BotFrameworkFunctionsAdapter> logger)
             : base(configuration, logger)
         {
             this.UseStorage(storage);
             this.UseState(userState, conversationState);
+            this.UseResourceExplorer(resourceExplorer);
+            this.UseAdaptiveDialogs();
+            this.UseLanguageGeneration(resourceExplorer);
 
             OnTurnError = async (ctx, ex) => {
                 // Log any leaked exception from the application.

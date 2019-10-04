@@ -1,0 +1,102 @@
+{
+  "$schema": "../../app.schema",
+  "$type": "Microsoft.AdaptiveDialog",
+  "Recognizer": {
+    "$type": "Microsoft.RegexRecognizer",
+    "intents": [
+      {
+        "$type": "Microsoft.IntentPattern",
+        "intent": "joke",
+        "pattern": "(?i)joke"
+      },
+      {
+        "$type": "Microsoft.IntentPattern",
+        "intent": "fortune",
+        "pattern": "(?i)fortune|future"
+      }
+    ]
+  },
+  "triggers": [
+    {
+      "$type": "Microsoft.OnConversationUpdateActivity",
+      "actions": [
+        {
+          "$type": "Microsoft.Foreach",
+          "itemsProperty": "turn.activity.membersAdded",
+          "actions": [
+            {
+              "$type": "Microsoft.IfCondition",
+              "condition": "dialog.foreach.value.id != turn.activity.recipient.id",
+              "actions": [
+                {
+                  "$type": "Microsoft.SendActivity",
+                  "activity": "Good morning {dialog.foreach.value.name}"
+                },
+                {
+                  "$type": "Microsoft.SendActivity",
+                  "activity": "What can I help you with today?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.OnIntent",
+      "intent": "joke",
+      "actions": [
+        {
+          "$type": "Microsoft.SendActivity",
+          "activity": "Why did the chicken cross the road?"
+        },
+        {
+          "$type": "Microsoft.EndTurn"
+        },
+        {
+          "$type": "Microsoft.SendActivity",
+          "activity": "Because I need to show a multi-step dialog"
+        },
+        {
+          "$type": "Microsoft.SendActivity",
+          "activity": "What else can I do for you?"
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.OnIntent",
+      "intent": "fortune",
+      "actions": [
+        {
+          "$type": "Microsoft.SendActivity",
+          "activity": "Seeing into the future..."
+        },
+        {
+          "$type": "Microsoft.SendActivity",
+          "activity": "I see great things happening..."
+        },
+        {
+          "$type": "Microsoft.SendActivity",
+          "activity": "Perhaps even a successful bot demo"
+        },
+        {
+          "$type": "Microsoft.SendActivity",
+          "activity": "What else can I do for you?"
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.OnUnknownIntent",
+      "actions": [
+        {
+          "$type": "Microsoft.SendActivity",
+          "activity": "Sorry, I didn't get that."
+        },
+        {
+          "$type": "Microsoft.SendActivity",
+          "activity": "What else can I do for you?"
+        }
+      ]
+    }
+  ]
+}

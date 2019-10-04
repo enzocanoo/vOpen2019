@@ -1,10 +1,10 @@
 ﻿using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Actions;
+using Microsoft.Bot.Builder.Dialogs.Adaptive.Conditions;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Recognizers;
-using Microsoft.Bot.Builder.Dialogs.Adaptive.Rules;
-using Microsoft.Bot.Builder.Dialogs.Adaptive.Steps;
-using Microsoft.Bot.Builder.LanguageGeneration;
+using Microsoft.Bot.Builder.LanguageGeneration.Generators;
 using Microsoft.Bot.Schema;
 using System.Collections.Generic;
 using System.Threading;
@@ -25,30 +25,29 @@ namespace SecretProject
                 Generator = new TemplateEngineLanguageGenerator(),
                 Recognizer = new RegexRecognizer()
                 {
-                    Intents = new Dictionary<string, string>()
-                    {
-                        { JokeIntent, "(?i)joke" },
-                        { FortuneIntent, "(?i)fortune|future" }
+                    Intents = new List<IntentPattern>() {
+                        new IntentPattern(JokeIntent, "(?i)joke"),
+                        new IntentPattern(FortuneIntent, "(?i)fortune|future")
                     }
                 },
-                Rules = new List<IRule>()
+                Triggers = new List<OnCondition>()
                 {
-                    new ConversationUpdateActivityRule()
+                    new OnConversationUpdateActivity()
                     {
-                        Steps = new List<IDialog>()
+                        Actions = new List<Dialog>()
                         {
                             new Foreach()
                             {
-                                ListProperty = "turn.activity.membersAdded",
-                                ValueProperty = "turn.memberAdded",
-                                Steps = new List<IDialog>()
+                                ItemsProperty = "turn.activity.membersAdded",
+                                Actions = new List<Dialog>()
                                 {
                                     new IfCondition()
                                     {
-                                        Condition = "turn.memberAdded.id != turn.activity.recipient.id",
-                                        Steps = new List<IDialog>()
+                                        Condition = "dialog.foreach.value.id != turn.activity.recipient.id",
+                                        Actions = new List<Dialog>()
                                         {
-                                            new SendActivity("Good morning {turn.memberAdded.name}"),
+                                            new SendActivity("Good morning {dialog.foreach.value.name}"),
+                                            new SendActivity("This sample uses AdaptiveDialog"),
                                             new SendActivity(IntroActivity("What can I help you with today?"))
                                         }
                                     }
@@ -56,10 +55,10 @@ namespace SecretProject
                             }
                         }
                     },
-                    new IntentRule()
+                    new OnIntent()
                     {
                         Intent = JokeIntent,
-                        Steps = new List<IDialog>()
+                        Actions = new List<Dialog>()
                         {
                             new SendActivity("Why did the chicken cross the road?"),
                             new EndTurn(),
@@ -67,10 +66,10 @@ namespace SecretProject
                             new SendActivity(IntroActivity("What else can I do for you?"))
                         }
                     },
-                    new IntentRule()
+                    new OnIntent()
                     {
                         Intent = FortuneIntent,
-                        Steps = new List<IDialog>()
+                        Actions = new List<Dialog>()
                         {
                             new SendActivity("Seeing into the future..."),
                             new SendActivity("I see great things happening..."),
@@ -78,9 +77,9 @@ namespace SecretProject
                             new SendActivity(IntroActivity("What else can I do for you?"))
                         }
                     },
-                    new UnknownIntentRule()
+                    new OnUnknownIntent()
                     {
-                        Steps = new List<IDialog>()
+                        Actions = new List<Dialog>()
                         {
                             new SendActivity("Sorry, I didn't get that."),
                             new SendActivity(IntroActivity("What else can I do for you?"))
