@@ -30,7 +30,6 @@ namespace SecretProject
             LoadDialogs();
         }
 
-
         private void LoadDialogs()
         {
             System.Diagnostics.Trace.TraceInformation("Loading resources...");
