@@ -53,7 +53,7 @@ namespace Microsoft.Bot.Builder.Integration.Functions
 
             if (string.IsNullOrEmpty(activity?.Type))
             {
-                return new StatusCodeResult((int) HttpStatusCode.BadRequest);
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
             }
 
             // grab the auth header from the inbound http request

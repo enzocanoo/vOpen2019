@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Bot.Schema;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace Microsoft.Bot.Builder.Integration.Functions
 {
@@ -23,7 +23,7 @@ namespace Microsoft.Bot.Builder.Integration.Functions
             Converters = new List<JsonConverter> { new Iso8601TimeSpanConverter() }
         };
 
-        public static readonly JsonSerializer BotMessageSerializer = JsonSerializer.Create(BotMessageSerializerSettings);
+        private static readonly JsonSerializer BotMessageSerializer = JsonSerializer.Create(BotMessageSerializerSettings);
 
         public static Activity ReadRequest(HttpRequest request)
         {

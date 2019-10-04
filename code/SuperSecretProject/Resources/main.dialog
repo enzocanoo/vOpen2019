@@ -34,6 +34,10 @@
                 },
                 {
                   "$type": "Microsoft.SendActivity",
+                  "activity": "Bot working without code :)"
+                },
+                {
+                  "$type": "Microsoft.SendActivity",
                   "activity": "What can I help you with today?"
                 }
               ]

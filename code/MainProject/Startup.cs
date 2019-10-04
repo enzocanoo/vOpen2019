@@ -18,12 +18,12 @@ namespace MainProject
             builder.Services.AddSingleton<ConversationState>();
             builder.Services.AddSingleton<IBotFrameworkFunctionsAdapter, Adapter>();
 
-            builder.Services.AddTransient<IRecognizer, RegExRecognizer>();
+            builder.Services.AddSingleton<IRecognizer, RegExRecognizer>();
 
-            builder.Services.AddTransient<IBot, Bot<MainDialog>>();
-            builder.Services.AddTransient<MainDialog>();
-            builder.Services.AddTransient<JokeDialog>();
-            builder.Services.AddTransient<FortuneDialog>();
+            builder.Services.AddSingleton<IBot, Bot<MainDialog>>();
+            builder.Services.AddSingleton<MainDialog>();
+            builder.Services.AddSingleton<JokeDialog>();
+            builder.Services.AddSingleton<FortuneDialog>();
 
             builder.Services.AddBotApplicationInsights();
         }
