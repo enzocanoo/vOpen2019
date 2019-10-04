@@ -1,8 +1,4 @@
 ﻿using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.Dialogs.Adaptive;
-using Microsoft.Bot.Builder.Dialogs.Debugging;
-using Microsoft.Bot.Builder.Dialogs.Declarative;
-using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
 using Microsoft.Bot.Builder.Integration.Functions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -18,14 +14,11 @@ namespace SecretProject
             IStorage storage,
             UserState userState,
             ConversationState conversationState,
-            ResourceExplorer resourceExplorer,
             ILogger<BotFrameworkFunctionsAdapter> logger)
             : base(configuration, logger)
         {
             this.UseStorage(storage);
             this.UseState(userState, conversationState);
-            this.UseResourceExplorer(resourceExplorer);
-            this.UseDebugger(configuration.GetValue<int>("debugport", 4712), events: new Events<AdaptiveEvents>());
 
             OnTurnError = async (ctx, ex) => {
                 // Log any leaked exception from the application.
