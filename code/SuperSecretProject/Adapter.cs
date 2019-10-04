@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Builder;
+﻿using System;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs.Adaptive;
 using Microsoft.Bot.Builder.Dialogs.Declarative;
 using Microsoft.Bot.Builder.Dialogs.Declarative.Resources;
@@ -7,7 +8,6 @@ using Microsoft.Bot.Builder.LanguageGeneration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
 
 namespace SuperSecretProject
 {
@@ -28,7 +28,8 @@ namespace SuperSecretProject
             this.UseAdaptiveDialogs();
             this.UseLanguageGeneration(resourceExplorer);
 
-            OnTurnError = async (ctx, ex) => {
+            OnTurnError = async (ctx, ex) =>
+            {
                 // Log any leaked exception from the application.
                 logger.LogError(ex, "Exception caught with activity {0}", JsonConvert.SerializeObject(ctx.Activity));
 

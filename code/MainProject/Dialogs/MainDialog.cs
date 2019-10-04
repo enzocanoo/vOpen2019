@@ -1,10 +1,10 @@
-﻿using MainProject.Recognizers;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using MainProject.Recognizers;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace MainProject.Dialogs
 {
@@ -20,12 +20,7 @@ namespace MainProject.Dialogs
             AddDialog(new TextPrompt(nameof(TextPrompt)));
             AddDialog(jokeDialog);
             AddDialog(fortuneDialog);
-            AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
-            {
-                IntroStepAsync,
-                ActStepAsync,
-                EndStepASync
-            }));
+            AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[] { IntroStepAsync, ActStepAsync, EndStepASync }));
 
             // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);

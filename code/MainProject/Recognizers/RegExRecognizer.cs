@@ -1,9 +1,9 @@
-﻿using Microsoft.Bot.Builder;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Bot.Builder;
 
 namespace MainProject.Recognizers
 {
@@ -12,8 +12,8 @@ namespace MainProject.Recognizers
         public const string JokeIntent = "joke";
         public const string FortuneIntent = "fortune";
 
-        private static readonly Regex jokeIntent = new Regex("(?i)joke", RegexOptions.Compiled);
-        private static readonly Regex fortuneIntent = new Regex("(?i)fortune|future", RegexOptions.Compiled);
+        private static readonly Regex JokeRegex = new Regex("(?i)joke", RegexOptions.Compiled);
+        private static readonly Regex FortuneRegex = new Regex("(?i)fortune|future", RegexOptions.Compiled);
 
         public Task<RecognizerResult> RecognizeAsync(ITurnContext turnContext, CancellationToken cancellationToken)
         {
@@ -36,13 +36,12 @@ namespace MainProject.Recognizers
             return result;
         }
 
-
         private IDictionary<string, IntentScore> GetIntentsResult(string text)
         {
             var result = new Dictionary<string, IntentScore>
             {
-                { JokeIntent, new IntentScore() { Score = GetScore(jokeIntent, text) } },
-                { FortuneIntent, new IntentScore() { Score = GetScore(fortuneIntent, text) } }
+                { JokeIntent, new IntentScore() { Score = GetScore(JokeRegex, text) } },
+                { FortuneIntent, new IntentScore() { Score = GetScore(FortuneRegex, text) } }
             };
 
             return result;

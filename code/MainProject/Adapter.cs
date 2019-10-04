@@ -11,7 +11,8 @@ namespace MainProject
         public Adapter(IConfiguration configuration, ILogger<BotFrameworkFunctionsAdapter> logger)
             : base(configuration, logger)
         {
-            OnTurnError = (ctx, ex) => {
+            OnTurnError = (ctx, ex) =>
+            {
                 // Log any leaked exception from the application.
                 logger.LogError(ex, "Exception caught with activity {0}", JsonConvert.SerializeObject(ctx.Activity));
 

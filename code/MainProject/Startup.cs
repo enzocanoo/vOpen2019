@@ -7,6 +7,7 @@ using Microsoft.Bot.Builder.Integration.Functions;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(MainProject.Startup))]
+
 namespace MainProject
 {
     public class Startup : FunctionsStartup

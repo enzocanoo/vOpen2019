@@ -1,4 +1,7 @@
-﻿using Microsoft.Bot.Builder;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Adaptive;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Actions;
@@ -6,9 +9,6 @@ using Microsoft.Bot.Builder.Dialogs.Adaptive.Conditions;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Recognizers;
 using Microsoft.Bot.Builder.LanguageGeneration.Generators;
 using Microsoft.Bot.Schema;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SecretProject
 {
@@ -25,7 +25,8 @@ namespace SecretProject
                 Generator = new TemplateEngineLanguageGenerator(),
                 Recognizer = new RegexRecognizer()
                 {
-                    Intents = new List<IntentPattern>() {
+                    Intents = new List<IntentPattern>()
+                    {
                         new IntentPattern(JokeIntent, "(?i)joke"),
                         new IntentPattern(FortuneIntent, "(?i)fortune|future")
                     }

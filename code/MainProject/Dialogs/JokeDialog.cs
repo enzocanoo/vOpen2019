@@ -1,7 +1,7 @@
-﻿using Microsoft.Bot.Builder;
-using Microsoft.Bot.Builder.Dialogs;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Builder.Dialogs;
 
 namespace MainProject.Dialogs
 {
@@ -10,11 +10,7 @@ namespace MainProject.Dialogs
         public JokeDialog() : base(nameof(JokeDialog))
         {
             AddDialog(new TextPrompt(nameof(TextPrompt)));
-            AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
-            {
-                BeginJoke,
-                EndJoke
-            }));
+            AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[] { BeginJoke, EndJoke }));
 
             InitialDialogId = nameof(WaterfallDialog);
         }

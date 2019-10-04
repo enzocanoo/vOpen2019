@@ -5,6 +5,7 @@ using Microsoft.Bot.Builder.Integration.Functions;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(SecretProject.Startup))]
+
 namespace SecretProject
 {
     public class Startup : FunctionsStartup

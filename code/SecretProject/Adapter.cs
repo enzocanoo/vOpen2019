@@ -1,9 +1,9 @@
-﻿using Microsoft.Bot.Builder;
+﻿using System;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.Functions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
 
 namespace SecretProject
 {
@@ -20,7 +20,8 @@ namespace SecretProject
             this.UseStorage(storage);
             this.UseState(userState, conversationState);
 
-            OnTurnError = async (ctx, ex) => {
+            OnTurnError = async (ctx, ex) =>
+            {
                 // Log any leaked exception from the application.
                 logger.LogError(ex, "Exception caught with activity {0}", JsonConvert.SerializeObject(ctx.Activity));
 

@@ -6,6 +6,7 @@ using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: FunctionsStartup(typeof(BotFunctionAppWithAdapterAndDI.Startup))]
+
 namespace BotFunctionAppWithAdapterAndDI
 {
     public class Startup : FunctionsStartup
